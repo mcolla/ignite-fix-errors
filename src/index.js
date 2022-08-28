@@ -36,6 +36,7 @@ app.put("/repositories/:id", (request, response) => {
   const updatedRepository = request.body;
 
   repositoryIndex = repositories.findIndex(repository => repository.id === id);
+  delete updatedRepository.likes;
 
   if (repositoryIndex < 0) {
     return response.status(404).json({ error: "Repository not found" });
@@ -72,7 +73,7 @@ app.post("/repositories/:id/like", (request, response) => {
   }
 
   const likes = ++repositories[repositoryIndex].likes;
-  return response.json({ likes });
+  return response.json(repositories[repositoryIndex]);
 
 });
 
